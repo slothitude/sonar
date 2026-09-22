@@ -27,3 +27,7 @@ Seven procedural audio cues (the sonar sweep with its echo repeat, the gulp, the
 
 ![Milestone 3 — the submission build](diary_images/sketch_vela_page.png)
 
+## 2026-09-22 23:51 — ROADMAP to submission
+
+Steps remaining: 1) Aaron publishes the itch page (toggle the publish radio on edit/5038915). 2) Aaron submits to TFS jam at itch.io/jam/tfs-jam-summer-2026 (click Submit, pick SONAR). 3) Verify embed plays on phone. 4) Post devlog #2 with the artifact sketch. 5) After jam: asset pack update, hub card art swap to SNES key art. DONE: M1 M2 M3 all green (66+ checks), build on itch, lore + diary + sketches complete.
+
