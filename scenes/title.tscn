@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/title.gd" id="1_title"]
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_title")
+
+[node name="Water" type="Sprite2D" parent="."]
+
+[node name="Silhouette" type="Sprite2D" parent="."]
+
+[node name="Bubbles" type="CPUParticles2D" parent="."]
+emitting = false
+
+[node name="Logo" type="Sprite2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]

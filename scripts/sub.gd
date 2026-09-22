@@ -14,6 +14,9 @@ var _touch_active := false
 var _touch_anchor_y := 0.0
 var _touch_y := 0.0
 var _has_texture := false
+## Milestone 3: the sub always leaves a faint engine-bubble trickle while it
+## is live; moving opens the throttle to the full plume.
+var moving := false
 ## False while the run is over (overlay up) — movement and pings freeze.
 var input_enabled := true
 
@@ -61,13 +64,18 @@ func _setup_bubbles() -> void:
 func _physics_process(delta: float) -> void:
 	if not input_enabled:
 		velocity = Vector2.ZERO
+		moving = false
 		_bubbles.emitting = false
 		return
 	var input_vec := gather_input()
 	velocity = step_velocity(velocity, input_vec, delta)
 	move_and_slide()
 	position = clamp_to_bounds(position, bounds, Feel.BOUNDS_MARGIN)
-	_bubbles.emitting = velocity.length() > 20.0
+	moving = velocity.length() > 20.0
+	# faint engine trickle always; full plume under way (milestone 3 feel)
+	_bubbles.emitting = true
+	_bubbles.speed_scale = Feel.ENGINE_TRICKLE_SCALE if not moving else 1.0
+	_bubbles.color.a = Feel.ENGINE_BUBBLE_ALPHA if not moving else 0.55
 
 
 func _draw() -> void:

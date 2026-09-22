@@ -16,6 +16,7 @@ var beacons := 0
 var score := 0                # running score (beacons); bonuses land in tally()
 var depth := 0.0              # px below Feel.SURFACE_LINE_Y, fed by main
 var max_depth_reached := 0.0
+var drain_scale := 1.0        # milestone 3: per-attempt curve (Feel.air_drain_mult)
 var over := false
 var won := false
 var end_reason := ""
@@ -29,6 +30,7 @@ func reset() -> void:
 	score = 0
 	depth = 0.0
 	max_depth_reached = 0.0
+	drain_scale = 1.0
 	over = false
 	won = false
 	end_reason = ""
@@ -54,8 +56,9 @@ func air_ratio() -> float:
 
 
 ## Air drain per second at the current depth (surface refill excluded).
+## drain_scale carries the milestone-3 attempt curve (1.0 / 1.05 / 1.1).
 func drain_rate() -> float:
-	return Feel.AIR_DRAIN_RATE * (1.0 + depth / Feel.AIR_DEPTH_PENALTY_PX)
+	return Feel.AIR_DRAIN_RATE * drain_scale * (1.0 + depth / Feel.AIR_DEPTH_PENALTY_PX)
 
 
 # ------------------------------------------------------------------ tick --

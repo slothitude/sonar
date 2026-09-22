@@ -21,3 +21,9 @@ Lurkers wake below and hunt your pings (bursting fast inside 150px), drifters bl
 
 ![Milestone 2 — the deep is populated](assets/generated/creature_lurker.png)
 
+## 2026-09-22 15:25 — Milestone 3 — the submission build
+
+Seven procedural audio cues (the sonar sweep with its echo repeat, the gulp, the crush warning), a title screen with a lurking silhouette drifting behind the logo, the air-vignette closing in, crush shake, the line-by-line win tally, and a gentle three-run difficulty curve. Every suite green twice; the web export is 41MB and jam-ready. The agent even root-caused a cold-boot timing flake and fixed it in game code — sonar now warms up on first input.
+
+![Milestone 3 — the submission build](diary_images/sketch_vela_page.png)
+
