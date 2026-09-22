@@ -1,0 +1,25 @@
+{
+	"project": "SONAR",
+	"tagline": "It Came From Below — a submarine in black water that can only see by pinging",
+	"jam": "TFS Jam Summer 2026, theme 'It Came From Below', web HTML5, <1GB, free",
+	"engine": "Godot 4.7 GDScript, PORTRAIT 540x960, stretch canvas_items/expand, gl_compatibility, web-first",
+	"laws": {
+		"constants_not_magic": "all feel numbers in scripts/feel.gd",
+		"growing_battery": "each milestone adds suites; done = 2x consecutive green",
+		"injectable_input": "reuse C:\\Users\\aron\\gyro-squadron-45 pattern — scripts/tilt_source.gd may be COPIED from gyro (pre-existing code is jam-legal) with touch-drag default on web",
+		"original_assets": "Flux sprites + procedural sonar audio (owned, generated in-house)"
+	},
+	"core_loop": "glide through dark water; press SONAR: a radial ping briefly reveals terrain + creatures as bright echoes which FADE over ~2.5s; creatures rise from below toward noise; reach the depth goal then surface before air/pressure out",
+	"systems": {
+		"sonar": {"cooldown": 3.0, "reveal_time": 1.2, "echo_fade": 2.5, "radius_px": 420, "ping_sfx": "procedural sweep"},
+		"movement": {"glide_accel": 300.0, "drag": 0.92, "max_speed": 260.0, "tilt_or_drag": true},
+		"creatures": [
+			{"id": "lurker", "behavior": "rises toward last ping origin, fast when close", "hp": "kills on touch"},
+			{"id": "drifter", "behavior": "slow sine wander, blocks paths", "kills_on_touch": true}
+		],
+		"survival": {"air_seconds": 60.0, "surface_refill": true, "pressure": "increases with depth, crushes hull below max_depth without upgrades"},
+		"goal": "collect 3 wreck beacons at depth, then surface — run ends with score = beacons*1000 + depth record + air bonus"
+	},
+	"art": ["sub_player", "creature_lurker", "creature_drifter", "wreck_beacon", "tile_water_dark", "title_logo"],
+	"milestones": ["1 SONAR CORE: darkness + ping reveal + echo fade + glide movement + battery", "2 creatures + beacons + air/pressure loop", "3 runs/score/HUD/menu polish + audio", "4 itch build"]
+}

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/sub.gd" id="1_sub"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hull"]
+radius = 18.0
+
+[node name="Sub" type="CharacterBody2D"]
+script = ExtResource("1_sub")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Bubbles" type="CPUParticles2D" parent="."]
+position = Vector2(0, 14)
+emitting = false
+amount = 12
+lifetime = 0.8
+
+[node name="Body" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hull")
