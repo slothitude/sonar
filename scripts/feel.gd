@@ -40,9 +40,43 @@ const SUB_SELF_ALPHA := 0.45   # self-lit cockpit floor (always dimly visible)
 const SUB_WIDTH_PX := 90.0
 const BEACON_HEIGHT_PX := 46.0
 
-# ---- placeholders: milestone 2 (spec.systems.survival / goal) ----
+# ---- milestone 2: creatures (spec.systems.creatures) ----
+const CREATURE_WIDTH_PX := 64.0
+const CREATURE_GLOW_ALPHA := 0.18     # just visible in the dark — fear
+const TOUCH_RADIUS := 30.0            # hull + fin overlap that kills
+const LURKER_SPEED := 120.0           # aggro cruise px/s
+const LURKER_MAX_SPEED := 235.0       # close-range burst cap (sub is 260 — escapable)
+const LURKER_ACCEL := 110.0           # px/s^2 toward the ping origin
+const LURKER_CLOSE_RANGE := 150.0     # inside this, the burst kicks in
+const LURKER_CLOSE_BURST := 2.1       # accel + cap multiplier in close range
+const LURKER_IDLE_DRAG := 80.0        # px/s^2 vel decay while unaggroed
+const LURKER_BOB_AMP := 9.0           # idle drift bob
+const LURKER_BOB_FREQ := 0.7
+const LURKER_WAKE_SIDE := 170.0       # wakes beside the sub's column, below view
+const LURKER_WAKE_Y := 1010.0         # just under the view bottom (960)
+const LURKER_DEPTH_STEPS: Array[float] = [200.0, 420.0, 640.0]
+const DRIFTER_SPEED := 34.0           # lane patrol px/s
+const DRIFTER_WAVE_AMP := 46.0        # sine bob px
+const DRIFTER_WAVE_FREQ := 1.1        # rad/s
+const DRIFTER_LANE_HALF_W := 90.0     # patrol half-width around the lane anchor
+const DRIFTER_LANES: Array[Vector2] = [Vector2(120, 460), Vector2(430, 620)]
+
+# ---- milestone 2: survival + goal (spec.systems.survival / goal) ----
 const AIR_SECONDS := 60.0
+const AIR_DRAIN_RATE := 1.0           # air/s at the surface line
+const AIR_DEPTH_PENALTY_PX := 400.0   # each this many px of depth adds 1x drain
+const SURFACE_LINE_Y := 40.0          # waterline; depth measures down from here
+const SURFACE_DEPTH_PX := 60.0        # within this of the surface = surfaced
 const SURFACE_REFILL_RATE := 30.0     # air/s while surfaced
-const PRESSURE_MAX_DEPTH := 800.0     # crush depth without upgrades
+const HULL_HP := 100.0
+const CRUSH_DAMAGE_PER_S := 25.0
+const PRESSURE_MAX_DEPTH := 800.0     # crush depth without beacons
 const BEACONS_REQUIRED := 3
 const BEACON_SCORE := 1000
+const BEACON_DEPTH_EXTENSION := 80.0  # max-depth gain per beacon collected
+const BEACON_AIR_TOPUP := 12.0
+const BEACON_COLLECT_RADIUS := 44.0
+const BEACON_FLASH_TIME := 0.5        # bright reveal on collection
+const BEACON_COLLECTED_ALPHA := 0.22  # the wreck beacon dims once taken
+const DEPTH_BONUS_PER_PX := 1.0
+const AIR_BONUS_PER_S := 10.0

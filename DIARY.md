@@ -15,3 +15,9 @@ A found document from the world (see LORE.md) and its sketch now live in this re
 
 ![Lore recovered](diary_images/sketch_vela_page.png)
 
+## 2026-09-22 13:55 — Milestone 2 — the deep is populated
+
+Lurkers wake below and hunt your pings (bursting fast inside 150px), drifters block lanes, air burns faster the deeper you go, the hull crushes past the beacons' allowance. Three beacons, then surface to win the tally. The careful-diver replay survives on stale pings; the reckless dive dies at 7.7 seconds. 28+28 green.
+
+![Milestone 2 — the deep is populated](assets/generated/creature_lurker.png)
+

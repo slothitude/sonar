@@ -14,6 +14,8 @@ var _touch_active := false
 var _touch_anchor_y := 0.0
 var _touch_y := 0.0
 var _has_texture := false
+## False while the run is over (overlay up) — movement and pings freeze.
+var input_enabled := true
 
 @onready var _sprite: Sprite2D = $Sprite
 @onready var _bubbles: CPUParticles2D = $Bubbles
@@ -57,6 +59,10 @@ func _setup_bubbles() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if not input_enabled:
+		velocity = Vector2.ZERO
+		_bubbles.emitting = false
+		return
 	var input_vec := gather_input()
 	velocity = step_velocity(velocity, input_vec, delta)
 	move_and_slide()
@@ -108,6 +114,8 @@ static func clamp_to_bounds(pos: Vector2, rect: Rect2, margin: float) -> Vector2
 
 ## Player-triggered, cooldown-gated — the gating lives in SonarVision.
 func try_ping() -> bool:
+	if not input_enabled:
+		return false
 	return sonar.ping()
 
 
