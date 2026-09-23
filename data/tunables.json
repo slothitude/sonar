@@ -1,0 +1,1408 @@
+{
+  "game": "sonar",
+  "source": "scripts/feel.gd",
+  "extracted": "2026-09-23T07:20:47",
+  "tunables": {
+    "PING_COOLDOWN": {
+      "value": 3.0,
+      "description": "Seconds between sonar pings",
+      "range": [
+        1.0,
+        10.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_COOLDOWN"
+    },
+    "REVEAL_TIME": {
+      "value": 1.2,
+      "description": "How long entities stay fully visible",
+      "range": [
+        0.5,
+        5.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "REVEAL_TIME"
+    },
+    "ECHO_FADE": {
+      "value": 2.5,
+      "description": "Seconds for echoes to fade out",
+      "range": [
+        1.0,
+        10.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "ECHO_FADE"
+    },
+    "ECHO_TOTAL_TIME": {
+      "value": null,
+      "description": "full echo lifetime",
+      "range": null,
+      "editable": false,
+      "type": "expr",
+      "const": "ECHO_TOTAL_TIME"
+    },
+    "SONAR_RADIUS": {
+      "value": 420.0,
+      "description": "px the ping reaches",
+      "range": [
+        210.0,
+        840.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SONAR_RADIUS"
+    },
+    "RING_EXPAND_TIME": {
+      "value": 0.5,
+      "description": "s for the ring to sweep out to SONAR_RADIUS",
+      "range": [
+        0.25,
+        1.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "RING_EXPAND_TIME"
+    },
+    "GLIDE_ACCEL": {
+      "value": 300.0,
+      "description": "px/s^2 toward input",
+      "range": [
+        150.0,
+        600.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GLIDE_ACCEL"
+    },
+    "DRAG": {
+      "value": 0.92,
+      "description": "velocity multiplier per physics tick",
+      "range": [
+        0.46,
+        1.84
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DRAG"
+    },
+    "MAX_SPEED": {
+      "value": 260.0,
+      "description": "px/s hard clamp",
+      "range": [
+        130.0,
+        520.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "MAX_SPEED"
+    },
+    "DEAD_ZONE": {
+      "value": 0.06,
+      "description": "normalized tilt dead zone",
+      "range": [
+        0.03,
+        0.12
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DEAD_ZONE"
+    },
+    "CURVE_EXPONENT": {
+      "value": 2.0,
+      "description": "quadratic response, precise center",
+      "range": [
+        1.0,
+        4.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CURVE_EXPONENT"
+    },
+    "SENSITIVITY": {
+      "value": 1.6,
+      "description": "output gain",
+      "range": [
+        0.8,
+        3.2
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SENSITIVITY"
+    },
+    "TILT_BLEND_GYRO": {
+      "value": 0.15,
+      "description": "touch of gyroscope for responsiveness",
+      "range": [
+        0.075,
+        0.3
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TILT_BLEND_GYRO"
+    },
+    "GRAVITY_NORM": {
+      "value": 9.81,
+      "description": "m/s^2; gravity.x / this -> -1..1 tilt",
+      "range": [
+        4.905,
+        19.62
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GRAVITY_NORM"
+    },
+    "GYRO_NORM_SCALE": {
+      "value": 2.0,
+      "description": "rad/s of gyro.x that counts as \"full\"",
+      "range": [
+        1.0,
+        4.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GYRO_NORM_SCALE"
+    },
+    "OUTPUT_MAX": {
+      "value": 1.0,
+      "description": "shaped output saturates here",
+      "range": [
+        0.5,
+        2.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "OUTPUT_MAX"
+    },
+    "TOUCH_DRAG_RANGE_PX": {
+      "value": 160.0,
+      "description": "finger travel equal to full deflection",
+      "range": [
+        80.0,
+        320.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TOUCH_DRAG_RANGE_PX"
+    },
+    "PLANE_MAX_SPEED": {
+      "value": 480.0,
+      "description": "referenced by tilt_source doc comment (unused here)",
+      "range": [
+        240.0,
+        960.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PLANE_MAX_SPEED"
+    },
+    "VIEW_WIDTH": {
+      "value": 540.0,
+      "description": "portrait design size",
+      "range": [
+        270.0,
+        1080.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIEW_WIDTH"
+    },
+    "VIEW_HEIGHT": {
+      "value": 960.0,
+      "description": "View height",
+      "range": [
+        480.0,
+        1920.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIEW_HEIGHT"
+    },
+    "BOUNDS_MARGIN": {
+      "value": 24.0,
+      "description": "px the sub is kept inside the play rect",
+      "range": [
+        12.0,
+        48.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BOUNDS_MARGIN"
+    },
+    "WATER_DRIFT_SPEED": {
+      "value": 18.0,
+      "description": "px/s downward texture scroll (descending illusion)",
+      "range": [
+        9.0,
+        36.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "WATER_DRIFT_SPEED"
+    },
+    "SUB_HOME": {
+      "value": {
+        "x": 270.0,
+        "y": 320.0
+      },
+      "description": "Sub home",
+      "range": null,
+      "editable": false,
+      "type": "vector",
+      "const": "SUB_HOME"
+    },
+    "SUB_SELF_ALPHA": {
+      "value": 0.45,
+      "description": "self-lit cockpit floor (always dimly visible)",
+      "range": [
+        0.225,
+        0.9
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SUB_SELF_ALPHA"
+    },
+    "SUB_WIDTH_PX": {
+      "value": 90.0,
+      "description": "---- art scaling (generated art is arbitrary size; normalized at load) ----",
+      "range": [
+        45.0,
+        180.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SUB_WIDTH_PX"
+    },
+    "BEACON_HEIGHT_PX": {
+      "value": 46.0,
+      "description": "Beacon height px",
+      "range": [
+        23.0,
+        92.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_HEIGHT_PX"
+    },
+    "CREATURE_WIDTH_PX": {
+      "value": 64.0,
+      "description": "---- milestone 2: creatures (spec.systems.creatures) ----",
+      "range": [
+        32.0,
+        128.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CREATURE_WIDTH_PX"
+    },
+    "CREATURE_GLOW_ALPHA": {
+      "value": 0.18,
+      "description": "just visible in the dark \u2014 fear",
+      "range": [
+        0.09,
+        0.36
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CREATURE_GLOW_ALPHA"
+    },
+    "TOUCH_RADIUS": {
+      "value": 30.0,
+      "description": "hull + fin overlap that kills",
+      "range": [
+        15.0,
+        60.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TOUCH_RADIUS"
+    },
+    "LURKER_SPEED": {
+      "value": 120.0,
+      "description": "aggro cruise px/s",
+      "range": [
+        60.0,
+        240.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_SPEED"
+    },
+    "LURKER_MAX_SPEED": {
+      "value": 220.0,
+      "description": "How fast lurkers chase",
+      "range": [
+        100,
+        400
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_MAX_SPEED"
+    },
+    "LURKER_ACCEL": {
+      "value": 110.0,
+      "description": "px/s^2 toward the ping origin",
+      "range": [
+        55.0,
+        220.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_ACCEL"
+    },
+    "LURKER_CLOSE_RANGE": {
+      "value": 150.0,
+      "description": "inside this, the burst kicks in",
+      "range": [
+        75.0,
+        300.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_CLOSE_RANGE"
+    },
+    "LURKER_CLOSE_BURST": {
+      "value": 2.1,
+      "description": "accel + cap multiplier in close range",
+      "range": [
+        1.05,
+        4.2
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_CLOSE_BURST"
+    },
+    "LURKER_IDLE_DRAG": {
+      "value": 80.0,
+      "description": "px/s^2 vel decay while unaggroed",
+      "range": [
+        40.0,
+        160.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_IDLE_DRAG"
+    },
+    "LURKER_BOB_AMP": {
+      "value": 9.0,
+      "description": "idle drift bob",
+      "range": [
+        4.5,
+        18.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_BOB_AMP"
+    },
+    "LURKER_BOB_FREQ": {
+      "value": 0.7,
+      "description": "Lurker bob freq",
+      "range": [
+        0.35,
+        1.4
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_BOB_FREQ"
+    },
+    "LURKER_WAKE_SIDE": {
+      "value": 170.0,
+      "description": "wakes beside the sub's column, below view",
+      "range": [
+        85.0,
+        340.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_WAKE_SIDE"
+    },
+    "LURKER_WAKE_Y": {
+      "value": 1030.0,
+      "description": "just under the view bottom (960)",
+      "range": [
+        515.0,
+        2060.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_WAKE_Y"
+    },
+    "LURKER_DEPTH_STEPS": {
+      "value": [
+        200.0,
+        420.0,
+        640.0
+      ],
+      "description": "Lurker depth steps",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "LURKER_DEPTH_STEPS"
+    },
+    "DRIFTER_SPEED": {
+      "value": 34.0,
+      "description": "lane patrol px/s",
+      "range": [
+        17.0,
+        68.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DRIFTER_SPEED"
+    },
+    "DRIFTER_WAVE_AMP": {
+      "value": 46.0,
+      "description": "sine bob px",
+      "range": [
+        23.0,
+        92.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DRIFTER_WAVE_AMP"
+    },
+    "DRIFTER_WAVE_FREQ": {
+      "value": 1.1,
+      "description": "rad/s",
+      "range": [
+        0.55,
+        2.2
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DRIFTER_WAVE_FREQ"
+    },
+    "DRIFTER_LANE_HALF_W": {
+      "value": 70.0,
+      "description": "patrol half-width around the lane anchor",
+      "range": [
+        35.0,
+        140.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DRIFTER_LANE_HALF_W"
+    },
+    "DRIFTER_LANES": {
+      "value": [
+        {
+          "x": 100,
+          "y": 460
+        },
+        {
+          "x": 430,
+          "y": 620
+        }
+      ],
+      "description": "Drifter lanes",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "DRIFTER_LANES"
+    },
+    "AIR_SECONDS": {
+      "value": 60.0,
+      "description": "Starting air supply",
+      "range": [
+        30,
+        180
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "AIR_SECONDS"
+    },
+    "AIR_DRAIN_RATE": {
+      "value": 1.0,
+      "description": "air/s at the surface line",
+      "range": [
+        0.5,
+        2.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "AIR_DRAIN_RATE"
+    },
+    "AIR_DEPTH_PENALTY_PX": {
+      "value": 400.0,
+      "description": "each this many px of depth adds 1x drain",
+      "range": [
+        200.0,
+        800.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "AIR_DEPTH_PENALTY_PX"
+    },
+    "SURFACE_LINE_Y": {
+      "value": 40.0,
+      "description": "waterline; depth measures down from here",
+      "range": [
+        20.0,
+        80.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SURFACE_LINE_Y"
+    },
+    "SURFACE_DEPTH_PX": {
+      "value": 60.0,
+      "description": "within this of the surface = surfaced",
+      "range": [
+        30.0,
+        120.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SURFACE_DEPTH_PX"
+    },
+    "SURFACE_REFILL_RATE": {
+      "value": 30.0,
+      "description": "air/s while surfaced",
+      "range": [
+        15.0,
+        60.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SURFACE_REFILL_RATE"
+    },
+    "HULL_HP": {
+      "value": 100.0,
+      "description": "Hull hp",
+      "range": [
+        50.0,
+        200.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "HULL_HP"
+    },
+    "CRUSH_DAMAGE_PER_S": {
+      "value": 25.0,
+      "description": "Crush damage per s",
+      "range": [
+        12.5,
+        50.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_DAMAGE_PER_S"
+    },
+    "MAX_DEPTH_BASE": {
+      "value": 800.0,
+      "description": "Base crush depth",
+      "range": [
+        400,
+        2000
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PRESSURE_MAX_DEPTH"
+    },
+    "BEACONS_REQUIRED": {
+      "value": 3,
+      "description": "Beacons required",
+      "range": [
+        1,
+        6
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "BEACONS_REQUIRED"
+    },
+    "BEACON_SCORE": {
+      "value": 1000,
+      "description": "Beacon score",
+      "range": [
+        500,
+        2000
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "BEACON_SCORE"
+    },
+    "BEACON_DEPTH_EXTENSION": {
+      "value": 80.0,
+      "description": "max-depth gain per beacon collected",
+      "range": [
+        40.0,
+        160.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_DEPTH_EXTENSION"
+    },
+    "BEACON_AIR_TOPUP": {
+      "value": 12.0,
+      "description": "Beacon air topup",
+      "range": [
+        6.0,
+        24.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_AIR_TOPUP"
+    },
+    "BEACON_COLLECT_RADIUS": {
+      "value": 44.0,
+      "description": "Beacon collect radius",
+      "range": [
+        22.0,
+        88.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_COLLECT_RADIUS"
+    },
+    "BEACON_FLASH_TIME": {
+      "value": 0.5,
+      "description": "bright reveal on collection",
+      "range": [
+        0.25,
+        1.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_FLASH_TIME"
+    },
+    "BEACON_COLLECTED_ALPHA": {
+      "value": 0.22,
+      "description": "the wreck beacon dims once taken",
+      "range": [
+        0.11,
+        0.44
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_COLLECTED_ALPHA"
+    },
+    "DEPTH_BONUS_PER_PX": {
+      "value": 1.0,
+      "description": "Depth bonus per px",
+      "range": [
+        0.5,
+        2.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DEPTH_BONUS_PER_PX"
+    },
+    "AIR_BONUS_PER_S": {
+      "value": 10.0,
+      "description": "Air bonus per s",
+      "range": [
+        5.0,
+        20.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "AIR_BONUS_PER_S"
+    },
+    "ENGINE_TRICKLE_SCALE": {
+      "value": 0.35,
+      "description": "idle bubble speed_scale (faint trail)",
+      "range": [
+        0.175,
+        0.7
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "ENGINE_TRICKLE_SCALE"
+    },
+    "ENGINE_BUBBLE_ALPHA": {
+      "value": 0.28,
+      "description": "idle bubble faintness",
+      "range": [
+        0.14,
+        0.56
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "ENGINE_BUBBLE_ALPHA"
+    },
+    "MAX_ATTEMPT_INDEX": {
+      "value": 2,
+      "description": "attempt index clamps here",
+      "range": [
+        1,
+        4
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "MAX_ATTEMPT_INDEX"
+    },
+    "AIR_DRAIN_ATTEMPTS": {
+      "value": [
+        0.0,
+        0.05,
+        0.1
+      ],
+      "description": "Air drain attempts",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "AIR_DRAIN_ATTEMPTS"
+    },
+    "WAKE_EARLY_ATTEMPTS": {
+      "value": [
+        0.0,
+        40.0,
+        80.0
+      ],
+      "description": "Wake early attempts",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "WAKE_EARLY_ATTEMPTS"
+    },
+    "LURKERS_ATTEMPTS": {
+      "value": [
+        3,
+        3,
+        4
+      ],
+      "description": "Lurkers attempts",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "LURKERS_ATTEMPTS"
+    },
+    "LURKER_EXTRA_STEP": {
+      "value": 760.0,
+      "description": "wake depth of the added lurker",
+      "range": [
+        380.0,
+        1520.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "LURKER_EXTRA_STEP"
+    },
+    "VIGNETTE_START": {
+      "value": 0.85,
+      "description": "vignette inner radius at full air",
+      "range": [
+        0.425,
+        1.7
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIGNETTE_START"
+    },
+    "VIGNETTE_END": {
+      "value": 0.16,
+      "description": "vignette inner radius at empty air",
+      "range": [
+        0.08,
+        0.32
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIGNETTE_END"
+    },
+    "VIGNETTE_SOFTNESS": {
+      "value": 0.34,
+      "description": "smoothstep falloff width",
+      "range": [
+        0.17,
+        0.68
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIGNETTE_SOFTNESS"
+    },
+    "VIGNETTE_ALPHA_MIN": {
+      "value": 0.5,
+      "description": "Vignette alpha min",
+      "range": [
+        0.25,
+        1.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIGNETTE_ALPHA_MIN"
+    },
+    "VIGNETTE_ALPHA_MAX": {
+      "value": 0.95,
+      "description": "Vignette alpha max",
+      "range": [
+        0.475,
+        1.9
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "VIGNETTE_ALPHA_MAX"
+    },
+    "CRUSH_SHAKE_AMP": {
+      "value": 5.0,
+      "description": "px shake while past crush depth",
+      "range": [
+        2.5,
+        10.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_SHAKE_AMP"
+    },
+    "CRUSH_SHAKE_MIN": {
+      "value": 0.55,
+      "description": "shake scale floor (never a dead frame)",
+      "range": [
+        0.275,
+        1.1
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_SHAKE_MIN"
+    },
+    "CRUSH_PULSE_FREQ": {
+      "value": 7.0,
+      "description": "rad/s of the red warning pulse",
+      "range": [
+        3.5,
+        14.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_PULSE_FREQ"
+    },
+    "CRUSH_PULSE_ALPHA": {
+      "value": 0.15,
+      "description": "peak red veil alpha",
+      "range": [
+        0.075,
+        0.3
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_PULSE_ALPHA"
+    },
+    "CRUSH_SFX_INTERVAL": {
+      "value": 1.1,
+      "description": "s between urgent pulse sfx while crushing",
+      "range": [
+        0.55,
+        2.2
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_SFX_INTERVAL"
+    },
+    "FLASH_RADIUS": {
+      "value": 320.0,
+      "description": "px the beacon radial flash sweeps",
+      "range": [
+        160.0,
+        640.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "FLASH_RADIUS"
+    },
+    "FLASH_CORE_RADIUS": {
+      "value": 46.0,
+      "description": "px hot core at the beacon",
+      "range": [
+        23.0,
+        92.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "FLASH_CORE_RADIUS"
+    },
+    "FLASH_RING_GAP": {
+      "value": 70.0,
+      "description": "px the second ping ring trails the first",
+      "range": [
+        35.0,
+        140.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "FLASH_RING_GAP"
+    },
+    "TALLY_LINE_STEP": {
+      "value": 0.45,
+      "description": "s between win tally lines revealing",
+      "range": [
+        0.225,
+        0.9
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TALLY_LINE_STEP"
+    },
+    "TALLY_FADE": {
+      "value": 0.25,
+      "description": "s each tally line fades in",
+      "range": [
+        0.125,
+        0.5
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TALLY_FADE"
+    },
+    "GULP_MIN_AIR": {
+      "value": 1.0,
+      "description": "gulp sfx only when the refill matters",
+      "range": [
+        0.5,
+        2.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GULP_MIN_AIR"
+    },
+    "TITLE_PULSE_FREQ": {
+      "value": 2.4,
+      "description": "rad/s of \"TAP TO DIVE\" pulsing",
+      "range": [
+        1.2,
+        4.8
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_PULSE_FREQ"
+    },
+    "TITLE_PULSE_MIN": {
+      "value": 0.35,
+      "description": "pulse alpha floor",
+      "range": [
+        0.175,
+        0.7
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_PULSE_MIN"
+    },
+    "TITLE_SILHOUETTE_SPEED": {
+      "value": 42.0,
+      "description": "px/s lurker silhouette drift",
+      "range": [
+        21.0,
+        84.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_SILHOUETTE_SPEED"
+    },
+    "TITLE_SILHOUETTE_ALPHA": {
+      "value": 0.16,
+      "description": "barely-there silhouette (fear, not show)",
+      "range": [
+        0.08,
+        0.32
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_SILHOUETTE_ALPHA"
+    },
+    "TITLE_SILHOUETTE_BOB": {
+      "value": 14.0,
+      "description": "px sine bob of the silhouette",
+      "range": [
+        7.0,
+        28.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_SILHOUETTE_BOB"
+    },
+    "TITLE_SILHOUETTE_BOB_FREQ": {
+      "value": 0.5,
+      "description": "Title silhouette bob freq",
+      "range": [
+        0.25,
+        1.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_SILHOUETTE_BOB_FREQ"
+    },
+    "TITLE_BUBBLE_RATE": {
+      "value": 6.0,
+      "description": "bubbles/s rising past the logo",
+      "range": [
+        3.0,
+        12.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_BUBBLE_RATE"
+    },
+    "TITLE_LOGO_WIDTH_PX": {
+      "value": 380.0,
+      "description": "Title logo width px",
+      "range": [
+        190.0,
+        760.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "TITLE_LOGO_WIDTH_PX"
+    },
+    "VERSION_LINE": {
+      "value": "TFS Jam '26",
+      "description": "Version line",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "VERSION_LINE"
+    },
+    "THEME_LINE": {
+      "value": "It Came From Below",
+      "description": "Theme line",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "THEME_LINE"
+    },
+    "TITLE_HINT": {
+      "value": "TAP TO DIVE",
+      "description": "Title hint",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "TITLE_HINT"
+    },
+    "SFX_SAMPLE_RATE": {
+      "value": 22050,
+      "description": "Hz, mono 16-bit",
+      "range": [
+        11025,
+        44100
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "SFX_SAMPLE_RATE"
+    },
+    "SFX_POOL_SIZE": {
+      "value": 6,
+      "description": "one-shot voices",
+      "range": [
+        3,
+        12
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "SFX_POOL_SIZE"
+    },
+    "SFX_MASTER_GAIN": {
+      "value": 0.55,
+      "description": "headroom so layered cues never clip",
+      "range": [
+        0.275,
+        1.1
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "SFX_MASTER_GAIN"
+    },
+    "SAVE_PATH": {
+      "value": "user://sonar_save.cfg",
+      "description": "Save path",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "SAVE_PATH"
+    },
+    "SAVE_KEY_DIVES": {
+      "value": "dives",
+      "description": "Save key dives",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "SAVE_KEY_DIVES"
+    },
+    "SAVE_KEY_MUTED": {
+      "value": "muted",
+      "description": "Save key muted",
+      "range": null,
+      "editable": false,
+      "type": "string",
+      "const": "SAVE_KEY_MUTED"
+    },
+    "PING_HZ_START": {
+      "value": 880.0,
+      "description": "ping \u2014 descending sine sweep with a faint echo repeat",
+      "range": [
+        440.0,
+        1760.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_HZ_START"
+    },
+    "PING_HZ_END": {
+      "value": 220.0,
+      "description": "Ping hz end",
+      "range": [
+        110.0,
+        440.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_HZ_END"
+    },
+    "PING_SECONDS": {
+      "value": 0.5,
+      "description": "Ping seconds",
+      "range": [
+        0.25,
+        1.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_SECONDS"
+    },
+    "PING_ECHO_DELAY": {
+      "value": 0.28,
+      "description": "Ping echo delay",
+      "range": [
+        0.14,
+        0.56
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_ECHO_DELAY"
+    },
+    "PING_ECHO_GAIN": {
+      "value": 0.32,
+      "description": "Ping echo gain",
+      "range": [
+        0.16,
+        0.64
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "PING_ECHO_GAIN"
+    },
+    "GROWL_HZ": {
+      "value": 52.0,
+      "description": "lurker growl \u2014 low sawtooth wobble",
+      "range": [
+        26.0,
+        104.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GROWL_HZ"
+    },
+    "GROWL_WOBBLE_HZ": {
+      "value": 5.0,
+      "description": "Growl wobble hz",
+      "range": [
+        2.5,
+        10.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GROWL_WOBBLE_HZ"
+    },
+    "GROWL_WOBBLE_DEPTH": {
+      "value": 0.3,
+      "description": "Growl wobble depth",
+      "range": [
+        0.15,
+        0.6
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GROWL_WOBBLE_DEPTH"
+    },
+    "GROWL_SECONDS": {
+      "value": 0.9,
+      "description": "Growl seconds",
+      "range": [
+        0.45,
+        1.8
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GROWL_SECONDS"
+    },
+    "BEACON_NOTES": {
+      "value": [
+        523.25,
+        659.25,
+        783.99,
+        1046.5
+      ],
+      "description": "beacon collect \u2014 rising arpeggio (C5 E5 G5 C6)",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "BEACON_NOTES"
+    },
+    "BEACON_NOTE_SECONDS": {
+      "value": 0.14,
+      "description": "Beacon note seconds",
+      "range": [
+        0.07,
+        0.28
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_NOTE_SECONDS"
+    },
+    "BEACON_SECONDS": {
+      "value": 0.62,
+      "description": "Beacon seconds",
+      "range": [
+        0.31,
+        1.24
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "BEACON_SECONDS"
+    },
+    "GULP_SECONDS": {
+      "value": 0.45,
+      "description": "gulp/surface \u2014 bubbly noise burst",
+      "range": [
+        0.225,
+        0.9
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GULP_SECONDS"
+    },
+    "GULP_BLIP_HZ_LO": {
+      "value": 300.0,
+      "description": "Gulp blip hz lo",
+      "range": [
+        150.0,
+        600.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GULP_BLIP_HZ_LO"
+    },
+    "GULP_BLIP_HZ_HI": {
+      "value": 1200.0,
+      "description": "Gulp blip hz hi",
+      "range": [
+        600.0,
+        2400.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GULP_BLIP_HZ_HI"
+    },
+    "GULP_BLIP_COUNT": {
+      "value": 7,
+      "description": "Gulp blip count",
+      "range": [
+        3,
+        14
+      ],
+      "editable": true,
+      "type": "int",
+      "const": "GULP_BLIP_COUNT"
+    },
+    "GULP_NOISE_GAIN": {
+      "value": 0.35,
+      "description": "Gulp noise gain",
+      "range": [
+        0.175,
+        0.7
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "GULP_NOISE_GAIN"
+    },
+    "CRUSH_HZ": {
+      "value": 92.0,
+      "description": "crush warning \u2014 urgent low pulse",
+      "range": [
+        46.0,
+        184.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_HZ"
+    },
+    "CRUSH_GATE_HZ": {
+      "value": 8.0,
+      "description": "Crush gate hz",
+      "range": [
+        4.0,
+        16.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_GATE_HZ"
+    },
+    "CRUSH_SECONDS": {
+      "value": 0.6,
+      "description": "Crush seconds",
+      "range": [
+        0.3,
+        1.2
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "CRUSH_SECONDS"
+    },
+    "DEATH_THUD_HZ": {
+      "value": 58.0,
+      "description": "death \u2014 deep thud + fading tone",
+      "range": [
+        29.0,
+        116.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DEATH_THUD_HZ"
+    },
+    "DEATH_TONE_HZ": {
+      "value": 110.0,
+      "description": "Death tone hz",
+      "range": [
+        55.0,
+        220.0
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DEATH_TONE_HZ"
+    },
+    "DEATH_SECONDS": {
+      "value": 1.2,
+      "description": "Death seconds",
+      "range": [
+        0.6,
+        2.4
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "DEATH_SECONDS"
+    },
+    "WIN_NOTES": {
+      "value": [
+        261.63,
+        329.63,
+        392.0,
+        523.25
+      ],
+      "description": "win \u2014 soft major chord (C E G C)",
+      "range": null,
+      "editable": false,
+      "type": "array",
+      "const": "WIN_NOTES"
+    },
+    "WIN_SECONDS": {
+      "value": 1.4,
+      "description": "Win seconds",
+      "range": [
+        0.7,
+        2.8
+      ],
+      "editable": true,
+      "type": "float",
+      "const": "WIN_SECONDS"
+    }
+  }
+}
